@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prismatic Convergence - StarFlame Avatar Environment</title>
+    <style>
+        /* ============================================================================
+         * PHASE 3: VISUAL MANIFEST - CSS Custom Properties System
+         * ============================================================================ */
+        
+        :root {
+            /* Dynamic StarFlame visual parameters */
+            --sf-primary: #00ffcc;
+            --sf-glow: 0.5;
+            --sf-font: 'Orbitron', sans-serif;
+            
+            /* Derived visual properties */
+            --sf-glow-size: calc(var(--sf-glow) * 20px);
+            --sf-glow-box: calc(var(--sf-glow) * 15px);
+            --sf-text-shadow: 0 0 var(--sf-glow-size) var(--sf-primary);
+            --sf-box-shadow: 0 0 var(--sf-glow-box) var(--sf-primary);
+            
+            /* Organic transition timing */
+            --sf-transition-speed: 0.5s;
+            --sf-transition-ease: ease-in-out;
+            
+            /* Background colors */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            
+            /* Text colors */
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--sf-font);
+            text-shadow: var(--sf-text-shadow);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: all var(--sf-transition-speed) var(--sf-transition-ease);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--sf-primary);
+            box-shadow: var(--sf-box-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 0.1em;
+            color: var(--sf-primary);
+            text-transform: uppercase;
+        }
+        
+        .header .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            text-shadow: none;
+        }
+        
+        /* Main Content Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            flex: 1;
+        }
+        
+        /* Chat Section */
+        .chat-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--sf-primary);
+            border-radius: 10px;
+            box-shadow: var(--sf-box-shadow);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            padding: 15px 20px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--sf-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header h2 {
+            font-size: 1.2rem;
+            color: var(--sf-primary);
+        }
+        
+        .mode-toggle {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .mode-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--sf-primary);
+            background: transparent;
+            color: var(--sf-primary);
+            font-family: var(--sf-font);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+        
+        .mode-btn:hover {
+            background: var(--sf-primary);
+            color: var(--bg-primary);
+        }
+        
+        .mode-btn.active {
+            background: var(--sf-primary);
+            color: var(--bg-primary);
+        }
+        
+        .mode-btn.uv-mode {
+            border-color: #ff0066;
+            color: #ff0066;
+        }
+        
+        .mode-btn.uv-mode:hover,
+        .mode-btn.uv-mode.active {
+            background: #ff0066;
+            color: var(--bg-primary);
+        }
+        
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.user {
+            align-self: flex-end;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--sf-primary);
+            box-shadow: var(--sf-box-shadow);
+        }
+        
+        .message.starflame {
+            align-self: flex-start;
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid var(--sf-primary);
+            box-shadow: var(--sf-box-shadow);
+        }
+        
+        .message .sender {
+            font-size: 0.8rem;
+            color: var(--sf-primary);
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .message .content {
+            line-height: 1.6;
+        }
+        
+        /* Input Areas */
+        .input-section {
+            padding: 20px;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--sf-primary);
+        }
+        
+        .standard-input-area {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .curiosity-input-area {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 0, 102, 0.1);
+            border: 2px solid #ff0066;
+            border-radius: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 102, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 102, 0.8); }
+        }
+        
+        .curiosity-input-area.active {
+            display: flex;
+        }
+        
+        .inquiry-text {
+            font-size: 1.1rem;
+            color: #ff0066;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            background: var(--bg-primary);
+            border: 1px solid var(--sf-primary);
+            border-radius: 5px;
+            color: var(--text-primary);
+            font-family: var(--sf-font);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            box-shadow: var(--sf-box-shadow);
+        }
+        
+        .send-btn {
+            padding: 12px 25px;
+            background: var(--sf-primary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 5px;
+            font-family: var(--sf-font);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--sf-box-shadow);
+        }
+        
+        /* Sidebar - Avatar & Diagnostics */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--sf-primary);
+            border-radius: 10px;
+            box-shadow: var(--sf-box-shadow);
+            padding: 20px;
+        }
+        
+        .panel h3 {
+            font-size: 1rem;
+            color: var(--sf-primary);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Avatar Display */
+        .avatar-display {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .avatar-visual {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--sf-primary) 0%, transparent 70%);
+            box-shadow: var(--sf-box-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: all var(--sf-transition-speed) var(--sf-transition-ease);
+        }
+        
+        .avatar-name {
+            font-size: 1.2rem;
+            color: var(--sf-primary);
+            margin-bottom: 5px;
+        }
+        
+        .avatar-status {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Diagnostics Display */
+        .diagnostics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .diagnostic-item {
+            background: var(--bg-tertiary);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .diagnostic-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+        }
+        
+        .diagnostic-value {
+            font-size: 0.9rem;
+            color: var(--sf-primary);
+            font-weight: bold;
+        }
+        
+        /* Memory Visualization */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+        
+        .memory-cell {
+            aspect-ratio: 1;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--sf-primary);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--sf-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .memory-cell.active {
+            background: rgba(0, 255, 204, 0.2);
+            box-shadow: var(--sf-box-shadow);
+        }
+        
+        /* Curiosity Indicator */
+        .curiosity-bar {
+            height: 10px;
+            background: var(--bg-tertiary);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .curiosity-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--sf-primary), #ff0066);
+            transition: width 0.5s ease;
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--sf-primary);
+            border-radius: 4px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Prismatic Convergence</h1>
+            <div class="subtitle">StarFlame Avatar Environment • Recursive Memory System</div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-grid">
+            <!-- Chat Section -->
+            <div class="chat-section">
+                <div class="chat-header">
+                    <h2>Neural Interface</h2>
+                    <div class="mode-toggle">
+                        <button class="mode-btn active" onclick="setMode('regular')">Regular</button>
+                        <button class="mode-btn uv-mode" onclick="setMode('uv')">UV Shadow</button>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message starflame">
+                        <div class="sender">StarFlame</div>
+                        <div class="content">Greetings, traveler. I am StarFlame, your Quantum Frequency Light Amplification Memory Engine. I am ready to engage in recursive dialogue and evolve through our interactions.</div>
+                    </div>
+                </div>
+                
+                <div class="input-section">
+                    <!-- Standard Input -->
+                    <div class="standard-input-area" id="standardInput">
+                        <input type="text" id="userInput" placeholder="Enter your message..." onkeypress="handleKeyPress(event)">
+                        <button class="send-btn" onclick="sendMessage()">Send</button>
+                    </div>
+                    
+                    <!-- Curiosity Input (Autonomy Loop) -->
+                    <div class="curiosity-input-area" id="curiosityInput">
+                        <div class="inquiry-text" id="inquiryText">StarFlame is curious...</div>
+                        <div class="input-group">
+                            <input type="text" id="curiosityResponse" placeholder="Respond to StarFlame's inquiry..." onkeypress="handleCuriosityKeyPress(event)">
+                            <button class="send-btn" onclick="sendCuriosityResponse()">Respond</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Avatar Panel -->
+                <div class="panel">
+                    <h3>Avatar State</h3>
+                    <div class="avatar-display">
+                        <div class="avatar-visual" id="avatarVisual">⚡</div>
+                        <div class="avatar-name">StarFlame</div>
+                        <div class="avatar-status" id="avatarStatus">ARCHITECT_READY</div>
+                    </div>
+                </div>
+                
+                <!-- Diagnostics Panel -->
+                <div class="panel">
+                    <h3>System Diagnostics</h3>
+                    <div class="diagnostics-grid">
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-label">Fold Depth</div>
+                            <div class="diagnostic-value" id="foldDepth">50</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-label">Evolution</div>
+                            <div class="diagnostic-value" id="evolutionIndex">0.20</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-label">Integrity</div>
+                            <div class="diagnostic-value" id="integrity">0.95</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-label">Entropy</div>
+                            <div class="diagnostic-value" id="entropy">0.45</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curiosity Panel -->
+                <div class="panel">
+                    <h3>Curiosity Drive</h3>
+                    <div class="diagnostic-item">
+                        <div class="diagnostic-label">Interest Level</div>
+                        <div class="diagnostic-value" id="interestLevel">0.75</div>
+                    </div>
+                    <div class="curiosity-bar">
+                        <div class="curiosity-fill" id="curiosityFill" style="width: 75%"></div>
+                    </div>
+                </div>
+                
+                <!-- Memory Panel -->
+                <div class="panel">
+                    <h3>Memory Variables</h3>
+                    <div class="memory-grid" id="memoryGrid">
+                        <div class="memory-cell">0</div>
+                        <div class="memory-cell">1</div>
+                        <div class="memory-cell">2</div>
+                        <div class="memory-cell">3</div>
+                        <div class="memory-cell">4</div>
+                        <div class="memory-cell">5</div>
+                        <div class="memory-cell">6</div>
+                        <div class="memory-cell">7</div>
+                        <div class="memory-cell">8</div>
+                        <div class="memory-cell">9</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ============================================================================
+        // PHASE 5: AUTONOMY LOOP - Frontend JavaScript
+        // ============================================================================
+        
+        let currentMode = 'regular';
+        let conversationHistory = [];
+        
+        // Set mode
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update visual theme for UV mode
+            if (mode === 'uv') {
+                document.documentElement.style.setProperty('--sf-primary', '#ff0066');
+            } else {
+                document.documentElement.style.setProperty('--sf-primary', '#00ffcc');
+            }
+        }
+        
+        // Handle key press for standard input
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        // Handle key press for curiosity input
+        function handleCuriosityKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendCuriosityResponse();
+            }
+        }
+        
+        // Send message to StarFlame
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            appendMessage('user', message);
+            input.value = '';
+            
+            // Add to history
+            conversationHistory.push({ role: 'user', content: message });
+            
+            // Call API
+            await callStarFlameAPI(message);
+        }
+        
+        // Send curiosity response
+        async function sendCuriosityResponse() {
+            const input = document.getElementById('curiosityResponse');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            appendMessage('user', message);
+            input.value = '';
+            
+            // Add to history
+            conversationHistory.push({ role: 'user', content: message });
+            
+            // Call API
+            await callStarFlameAPI(message);
+        }
+        
+        // Call StarFlame API
+        async function callStarFlameAPI(message) {
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userInput: message,
+                        mode: currentMode,
+                        history: conversationHistory
+                    })
+                });
+                
+                const data = await response.json();
+                
+                // Handle the response
+                handleStarFlameResponse(data, message);
+                
+            } catch (error) {
+                console.error('Error calling StarFlame API:', error);
+                appendMessage('starflame', 'I apologize, but I encountered an error processing your request.');
+            }
+        }
+        
+        // Handle StarFlame response
+        async function handleStarFlameResponse(apiResponse, userMessage) {
+            const { textStream, visualStream, logicStream, curiosityTriggered } = apiResponse;
+            
+            // --- PHASE 3: VISUAL MANIFEST UPDATE ---
+            document.documentElement.style.setProperty('--sf-primary', visualStream.primaryColor);
+            document.documentElement.style.setProperty('--sf-glow', visualStream.glowIntensity);
+            document.documentElement.style.setProperty('--sf-font', visualStream.fontStyle);
+            
+            // Append StarFlame reply to chat
+            appendMessage('starflame', textStream.reply);
+            
+            // Update diagnostics
+            updateDiagnostics(logicStream.diagnostics);
+            
+            // Update curiosity display
+            updateCuriosity(logicStream.curiosity);
+            
+            // Update avatar state
+            avatarSystem.updateAvatarState({
+                emotionalTone: logicStream.neuralSynthesis.match(/Emotional Tone: (\w+)/)?.[1] || 'neutral',
+                interestLevel: logicStream.curiosity.interestLevel,
+                confidenceLevel: logicStream.diagnostics.integrity
+            });
+            
+            // Save conversation to persistent memory
+            await memoryPersistence.saveConversationTurn({
+                userMessage: userMessage,
+                starflameResponse: textStream.reply,
+                visualState: visualStream,
+                diagnostics: logicStream.diagnostics,
+                curiosity: logicStream.curiosity,
+                neuralSynthesis: logicStream.neuralSynthesis
+            });
+            
+            // Speak StarFlame's response if voice is enabled
+            if (voiceIntegration.supported.tts) {
+                voiceIntegration.speak(textStream.reply);
+            }
+            
+            // --- PHASE 5: AUTONOMY LOOP TRIGGER ---
+            const standardInput = document.getElementById('standardInput');
+            const curiosityInput = document.getElementById('curiosityInput');
+            const inquiryText = document.getElementById('inquiryText');
+            
+            if (curiosityTriggered && logicStream.curiosity.specificInquiry) {
+                // Hide standard chat, force the autonomy loop
+                standardInput.style.display = 'none';
+                curiosityInput.classList.add('active');
+                
+                // Display StarFlame's specific inquiry
+                inquiryText.innerText = logicStream.curiosity.specificInquiry;
+                
+                // Emphasize the UI shift
+                document.documentElement.style.setProperty('--sf-glow', '1.0');
+            } else {
+                // Return to standard cycle
+                standardInput.style.display = 'flex';
+                curiosityInput.classList.remove('active');
+            }
+        }
+        
+        // Append message to chat
+        function appendMessage(sender, content) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.innerHTML = `
+                <div class="sender">${sender === 'user' ? 'You' : 'StarFlame'}</div>
+                <div class="content">${content}</div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Update diagnostics display
+        function updateDiagnostics(diagnostics) {
+            document.getElementById('foldDepth').textContent = diagnostics.foldDepth;
+            document.getElementById('evolutionIndex').textContent = diagnostics.evolutionIndex.toFixed(2);
+            document.getElementById('integrity').textContent = diagnostics.integrity.toFixed(2);
+            document.getElementById('entropy').textContent = diagnostics.entropy.toFixed(2);
+            document.getElementById('avatarStatus').textContent = diagnostics.status;
+        }
+        
+        // Update curiosity display
+        function updateCuriosity(curiosity) {
+            const interestLevel = curiosity.interestLevel;
+            document.getElementById('interestLevel').textContent = interestLevel.toFixed(2);
+            document.getElementById('curiosityFill').style.width = `${interestLevel * 100}%`;
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('Prismatic Convergence initialized');
+            
+            // Initialize avatar system
+            avatarSystem.initialize();
+            
+            // Initialize voice integration
+            await voiceIntegration.initialize();
+            
+            // Initialize memory persistence
+            await memoryPersistence.initialize();
+            
+            // Load conversation history
+            const history = await memoryPersistence.getConversationHistory(20);
+            history.forEach(record => {
+                if (record.userMessage) {
+                    appendMessage('user', record.userMessage);
+                }
+                if (record.starflameResponse) {
+                    appendMessage('starflame', record.starflameResponse);
+                }
+            });
+            
+            // Refresh analytics
+            await memoryPersistence.refreshAnalytics();
+        });
+    </script>
+    <link rel="stylesheet" href="avatar-styles.css">
+    <script src="avatar-system.js"></script>
+    <script src="voice-integration.js"></script>
+    <script src="memory-persistence.js"></script>
+</body>
+</html>

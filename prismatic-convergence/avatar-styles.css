@@ -1,0 +1,313 @@
+/**
+ * Avatar System Styles
+ */
+
+/* Avatar Creation Panel */
+.avatar-creator {
+    background: var(--bg-secondary);
+    border: 1px solid var(--sf-primary);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--sf-box-shadow);
+}
+
+.avatar-creator h3 {
+    color: var(--sf-primary);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+/* Avatar Preview */
+.avatar-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+}
+
+/* Avatar Customization */
+.avatar-customization {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.customization-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.customization-section label {
+    color: var(--sf-primary);
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.customization-section select,
+.customization-section input[type="range"] {
+    padding: 10px;
+    background: var(--bg-primary);
+    border: 1px solid var(--sf-primary);
+    border-radius: 5px;
+    color: var(--text-primary);
+    font-family: var(--sf-font);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.customization-section select:focus,
+.customization-section input[type="range"]:focus {
+    box-shadow: var(--sf-box-shadow);
+}
+
+/* Color Picker */
+.color-picker {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.color-btn {
+    width: 40px;
+    height: 40px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+}
+
+.color-btn.selected {
+    border-color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Create Avatar Button */
+.create-avatar-btn {
+    padding: 12px 25px;
+    background: var(--sf-primary);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 5px;
+    font-family: var(--sf-font);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.create-avatar-btn:hover {
+    transform: scale(1.05);
+    box-shadow: var(--sf-box-shadow);
+}
+
+/* Avatar Display */
+.avatar-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* Avatar Animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Avatar Interaction Animations */
+.animate-wave {
+    animation: wave 1s ease-in-out;
+}
+
+@keyframes wave {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-15deg);
+    }
+    75% {
+        transform: rotate(15deg);
+    }
+}
+
+.animate-nod {
+    animation: nod 0.5s ease-in-out;
+}
+
+@keyframes nod {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+.animate-think {
+    animation: think 2s ease-in-out;
+}
+
+@keyframes think {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.animate-celebrate {
+    animation: celebrate 1.5s ease-in-out;
+}
+
+@keyframes celebrate {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+    25% {
+        transform: rotate(-10deg) scale(1.1);
+    }
+    50% {
+        transform: rotate(10deg) scale(1.2);
+    }
+    75% {
+        transform: rotate(-10deg) scale(1.1);
+    }
+}
+
+/* Avatar Notification */
+.avatar-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    background: var(--sf-primary);
+    color: var(--bg-primary);
+    border-radius: 5px;
+    font-family: var(--sf-font);
+    font-weight: bold;
+    box-shadow: var(--sf-box-shadow);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Avatar State Indicators */
+.avatar-state-indicator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: var(--bg-tertiary);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.avatar-state-label {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.avatar-state-value {
+    color: var(--sf-primary);
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Avatar Action Buttons */
+.avatar-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.avatar-action-btn {
+    padding: 8px 15px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--sf-primary);
+    color: var(--sf-primary);
+    border-radius: 5px;
+    font-family: var(--sf-font);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.avatar-action-btn:hover {
+    background: var(--sf-primary);
+    color: var(--bg-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .avatar-creator {
+        padding: 15px;
+    }
+    
+    .color-picker {
+        justify-content: center;
+    }
+    
+    .avatar-actions {
+        justify-content: center;
+    }
+}
